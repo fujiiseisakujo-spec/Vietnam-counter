@@ -34,64 +34,63 @@
   </style>
 </head>
 
-<div class="card">
-  <h1>
-    ベトナム生活カウンター<br>
-    @藤井製作所
-  </h1>
+<body>
+  <div class="card">
+    <h1>
+      ベトナム生活カウンター<br>
+      @藤井製作所
+    </h1>
 
-  <div id="result" class="day">計算中…</div>
-  <div id="vnTime" class="small"></div>
-  <div id="jpTime" class="small"></div>
-</div>
+    <div id="result" class="day">計算中…</div>
+    <div id="vnTime" class="small"></div>
+    <div id="jpTime" class="small"></div>
+  </div>
 
+  <script>
+    const start = new Date(2026, 2, 3);
 
-<script>
-  const start = new Date(2026, 2, 3);
+    function toUtcDateOnly(d) {
+      return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+    }
 
-  function toUtcDateOnly(d) {
-    return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
-  }
+    function updateAll() {
+      const now = new Date();
 
-  function updateAll() {
-    const now = new Date();
+      const diffDays =
+        Math.floor(
+          (toUtcDateOnly(now) - toUtcDateOnly(start)) /
+          (1000 * 60 * 60 * 24)
+        ) + 1;
 
-    const diffDays =
-      Math.floor(
-        (toUtcDateOnly(now) - toUtcDateOnly(start)) /
-        (1000 * 60 * 60 * 24)
-      ) + 1;
+      document.getElementById("result").textContent =
+        `${diffDays} 日目！`;
 
-    document.getElementById("result").textContent =
-      `${diffDays} 日目！`;
+      const vnTime = now.toLocaleString("ja-JP", {
+        timeZone: "Asia/Ho_Chi_Minh",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
 
-    const vnTime = now.toLocaleString("ja-JP", {
-      timeZone: "Asia/Ho_Chi_Minh",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    });
+      const jpTime = now.toLocaleString("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
 
-    const jpTime = now.toLocaleString("ja-JP", {
-      timeZone: "Asia/Tokyo",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    });
+      document.getElementById("vnTime").textContent = `ベトナム時間：${vnTime}`;
+      document.getElementById("jpTime").textContent = `日本時間：${jpTime}`;
+    }
 
-    document.getElementById("vnTime").textContent = `ベトナム時間：${vnTime}`;
-    document.getElementById("jpTime").textContent = `日本時間：${jpTime}`;
-  }
-
-  updateAll();
-  setInterval(updateAll, 1000);
-</script>
-``
+    updateAll();
+    setInterval(updateAll, 1000);
+  </script>
 </body>
 </html>
