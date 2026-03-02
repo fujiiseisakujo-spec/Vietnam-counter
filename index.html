@@ -46,9 +46,7 @@
 </div>
 
 
- <script>
-  // ✅ 開始日（Safariでも安全な書き方）
-  // 月は0始まり → 3月 = 2
+<script>
   const start = new Date(2026, 2, 3);
 
   function toUtcDateOnly(d) {
@@ -58,7 +56,6 @@
   function updateAll() {
     const now = new Date();
 
-    // --- 何日目 ---
     const diffDays =
       Math.floor(
         (toUtcDateOnly(now) - toUtcDateOnly(start)) /
@@ -66,23 +63,8 @@
       ) + 1;
 
     document.getElementById("result").textContent =
-      ` ${diffDays} 日目！`;
+      `${diffDays} 日目！`;
 
-    document.getElementById("today").textContent =
-      `今日：${now.toLocaleDateString("ja-JP")}`;
-
-    // --- 日本時間（秒まで）---
-    const jpTime = now.toLocaleString("ja-JP", {
-      timeZone: "Asia/Tokyo",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    });
-
-    // --- ベトナム時間（秒まで）---
     const vnTime = now.toLocaleString("ja-JP", {
       timeZone: "Asia/Ho_Chi_Minh",
       year: "numeric",
@@ -93,14 +75,23 @@
       second: "2-digit"
     });
 
-    document.getElementById("jpTime").textContent = `日本時間：${jpTime}`;
+    const jpTime = now.toLocaleString("ja-JP", {
+      timeZone: "Asia/Tokyo",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+
     document.getElementById("vnTime").textContent = `ベトナム時間：${vnTime}`;
+    document.getElementById("jpTime").textContent = `日本時間：${jpTime}`;
   }
 
-  // 初回表示
   updateAll();
-  // 1秒ごと更新（秒表示のため）
   setInterval(updateAll, 1000);
 </script>
+``
 </body>
 </html>
